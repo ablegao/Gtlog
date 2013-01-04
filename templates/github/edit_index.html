@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<script>
+	function del(id){
+		if (confirm("是否要删除这条信息？"))
+		{
+			t = new Date().getTime();
+			$.ajax({url:"/blog_edit" , 
+				type:'post',
+				data:{'_method':'DELETE' , 'id':id},
+				complete:function(req){
+					window.location.href="/blog_edit?t="+t;
+				}
+			});
+		}
+	}
+</script>
+<form method="POST" action="" >
+	<input type="text" style="width:300px;" value="" name="title"><br/>
+	<textarea style="width:600px;height:100px;" name="content"></textarea>
+	<input type="submit" value="提交">
+</form>
+
+{% for row in rows %}
+<h3>{{ row[1] }}</h3>
+{{ row[2]}}
+<p> <a href="#" onclick="del({{row[0]}})" title="" >删除</a></p>
+{% end%}
+{% end %}
+
